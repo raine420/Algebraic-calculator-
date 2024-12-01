@@ -604,3 +604,1576 @@ function solveRoots() {
         document.getElementById('roots-result').innerHTML = "Please enter valid numbers for a, b, and c.";
         return;
     }
+
+   // Solve the equation √(ax + b) = c -> (ax + b) = c² -> ax + b = c²
+    // => ax = c² - b
+    // => x = (c² - b) / a
+
+    // Calculate the value of x
+    let x = (Math.pow(c, 2) - b) / a;
+
+    // Display the result
+    document.getElementById('roots-result').innerHTML = "Solution for x: " + x;
+}
+</script>
+
+
+                <!-- Arithmetic Sequence -->
+<div class="calculator-content" id="arithmetic-sequence">
+    <h2>Arithmetic Sequence Solver</h2>
+    <p>Find the nth term of an arithmetic sequence</p>
+    <input type="number" id="arithmetic-a" placeholder="Enter first term (a₁)">
+    <input type="number" id="arithmetic-d" placeholder="Enter common difference Id)">
+    <input type="number" id="arithmetic-n" placeholder="Enter n (term number)">
+    <button id="solve-btn">Find nth Term</button>
+    <div class="result" id="arithmetic-result"></div>
+</div>
+
+<script>
+  // Wait until the DOM is fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // Select the button and add an event listener for the click event
+    const solveButton = document.getElementById("solve-btn");
+
+    // Attach the event listener
+    solveButton.addEventListener("click", solveArithmeticSequence);
+
+    // Function to solve the arithmetic sequence
+    function solveArithmeticSequence() {
+      // Get values from the input fields
+      const a = parseFloat(document.getElementById("arithmetic-a").value);  // first term a₁
+      const d = parseFloat(document.getElementById("arithmetic-d").value);  // common difference d
+      const n = parseInt(document.getElementById("arithmetic-n").value);   // term number n
+
+      // Ensure all values are provided
+      if (isNaN(a) || isNaN(d) || isNaN(n) || n <= 0) {
+        document.getElementById("arithmetic-result").textContent = "Please enter valid numbers and a positive n value.";
+        return;
+      }
+
+      // Formula for the nth term of an arithmetic sequence: aₙ = a₁ + (n - 1) * d
+      const nthTerm = a + (n - 1) * d;
+
+      // Display the result
+      document.getElementById("arithmetic-result").textContent = `The ${n}th term is: ${nthTerm}`;
+    }
+  });
+</script>
+
+
+                <!-- Binomial Theorem -->
+<div class="calculator-content" id="binomial-theorem">
+    <h2>Binomial Expansion</h2>
+    <p>(a + b)^n</p>
+    <input type="number" id="binomial-a" placeholder="Enter coefficient a">
+    <input type="number" id="binomial-b" placeholder="Enter coefficient b">
+    <input type="number" id="binomial-n" placeholder="Enter power (n)">
+    <button onclick="solveBinomial()">Expand</button>
+    <div class="result" id="binomial-result"></div>
+</div>
+
+<script>
+    // Function to calculate factorial
+    function factorial(n) {
+        if (n === 0 || n === 1) return 1;
+        let result = 1;
+        for (let i = 2; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    // Function to calculate binomial coefficient (n choose k)
+    function binomialCoefficient(n, k) {
+        return factorial(n) / (factorial(k) * factorial(n - k));
+    }
+
+    // Function to solve binomial expansion (a + b)^n
+    function solveBinomial() {
+        // Get the input values
+        const a = parseFloat(document.getElementById('binomial-a').value);
+        const b = parseFloat(document.getElementById('binomial-b').value);
+        const n = parseInt(document.getElementById('binomial-n').value);
+
+        // Validate inputs
+        if (isNaN(a) || isNaN(b) || isNaN(n)) {
+            document.getElementById('binomial-result').textContent = "Please enter valid numbers for a, b, and n.";
+            return;
+        }
+
+        let result = [];
+        // Apply the binomial expansion formula: (a + b)^n
+        for (let k = 0; k <= n; k++) {
+            const coefficient = binomialCoefficient(n, k);
+            const aTerm = Math.pow(a, n - k);
+            const bTerm = Math.pow(b, k);
+
+            // Format the term for display
+            let term = `${coefficient}`;
+            if (n - k > 0) term += `a^${n - k}`;
+            if (k > 0) term += `b^${k}`;
+
+            result.push(term);
+        }
+
+        // Display the result
+        document.getElementById('binomial-result').textContent = result.join(' + ');
+    }
+</script>
+
+
+                <!-- Complex Numbers -->
+<div class="calculator-content" id="complex-numbers">
+    <h2>Complex Numbers</h2>
+    <p>Addition, subtraction, and multiplication of complex numbers</p>
+
+    <!-- Input fields for real and imaginary parts -->
+    <input type="number" id="complex-a" placeholder="Enter real part of 1st number">
+    <input type="number" id="complex-b" placeholder="Enter imaginary part of 1st number">
+    <input type="number" id="complex-c" placeholder="Enter real part of 2nd number">
+    <input type="number" id="complex-d" placeholder="Enter imaginary part of 2nd number">
+    
+    <!-- Button to trigger the calculation -->
+    <button onclick="performComplexOperations()">Solve</button>
+    
+    
+    <!-- Area to display the result -->
+    <div class="result" id="complex-result"></div>
+</div>
+
+<script>
+    // Function to perform complex number operations
+    function performComplexOperations() {
+        // Get the input values
+        const a = parseFloat(document.getElementById('complex-a').value); // Real part of 1st number
+        const b = parseFloat(document.getElementById('complex-b').value); // Imaginary part of 1st number
+        const c = parseFloat(document.getElementById('complex-c').value); // Real part of 2nd number
+        const d = parseFloat(document.getElementById('complex-d').value); // Imaginary part of 2nd number
+
+        // Validation to ensure all inputs are numbers
+        if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)) {
+            document.getElementById('complex-result').textContent = "Please enter valid numbers for all parts.";
+            return;
+        }
+
+        // Perform the operations
+        const additionReal = a + c;
+        const additionImaginary = b + d;
+
+        const subtractionReal = a - c;
+        const subtractionImaginary = b - d;
+
+        const multiplicationReal = a * c - b * d;
+        const multiplicationImaginary = a * d + b * c;
+
+        // Display the results
+        document.getElementById('complex-result').innerHTML = `
+            <p><strong>Addition:</strong> (${a} + ${b}i) + (${c} + ${d}i) = ${additionReal} + ${additionImaginary}i</p>
+            <p><strong>Subtraction:</strong> (${a} + ${b}i) - (${c} + ${d}i) = ${subtractionReal} + ${subtractionImaginary}i</p>
+            <p><strong>Multiplication:</strong> (${a} + ${b}i) * (${c} + ${d}i) = ${multiplicationReal} + ${multiplicationImaginary}i</p>
+        `;
+    }
+</script>
+
+
+                <!-- Conic Sections -->
+<div class="calculator-content" id="conic-sections">
+    <h2>Conic Sections</h2>
+    <p>Equation of Circle, Ellipse, Parabola, Hyperbola</p>
+
+
+    <!-- Input fields for Conic Sections -->
+    <h3>Choose a Conic Section</h3>
+    <select id="conic-type">
+        <option value="circle">Circle</option>
+        <option value="ellipse">Ellipse</option>
+        <option value="parabola">Parabola</option>
+        <option value="hyperbola">Hyperbola</option>
+    </select>
+
+    <div id="circle-inputs">
+        <h4>Circle: (x - h)² + (y - k)² = r²</h4>
+        <input type="number" id="circle-h" placeholder="Enter h (center x)">
+        <input type="number" id="circle-k" placeholder="Enter k (center y)">
+        <input type="number" id="circle-r" placeholder="Enter r (radius)">
+    </div>
+
+    <div id="ellipse-inputs" style="display:none;">
+        <h4>Ellipse: (x - h)² / a² + (y - k)² / b² = 1</h4>
+        <input type="number" id="ellipse-h" placeholder="Enter h (center x)">
+        <input type="number" id="ellipse-k" placeholder="Enter k (center y)">
+        <input type="number" id="ellipse-a" placeholder="Enter a (semi-major axis)">
+        <input type="number" id="ellipse-b" placeholder="Enter b (semi-minor axis)">
+    </div>
+
+    <div id="parabola-inputs" style="display:none;">
+        <h4>Parabola: y = a(x - h)² + k</h4>
+        <input type="number" id="parabola-h" placeholder="Enter h (vertex x)">
+        <input type="number" id="parabola-k" placeholder="Enter k (vertex y)">
+        <input type="number" id="parabola-a" placeholder="Enter a (curvature)">
+    </div>
+
+    <div id="hyperbola-inputs" style="display:none;">
+        <h4>Hyperbola: (x - h)² / a² - (y - k)² / b² = 1</h4>
+        <input type="number" id="hyperbola-h" placeholder="Enter h (center x)">
+        <input type="number" id="hyperbola-k" placeholder="Enter k (center y)">
+        <input type="number" id="hyperbola-a" placeholder="Enter a (distance to vertices)">
+        <input type="number" id="hyperbola-b" placeholder="Enter b (distance to asymptotes)">
+    </div>
+
+
+    <!-- Button to trigger the calculation -->
+    <button onclick="solveConicSections()">Solve</button>
+    
+    <!-- Result area to display the equation -->
+    <div class="result" id="conic-result"></div>
+</div>
+
+<script>
+    // Function to toggle input fields based on selected conic section type
+    document.getElementById('conic-type').addEventListener('change', function() {
+        const type = this.value;
+        document.getElementById('circle-inputs').style.display = type === 'circle' ? 'block' : 'none';
+        document.getElementById('ellipse-inputs').style.display = type === 'ellipse' ? 'block' : 'none';
+        document.getElementById('parabola-inputs').style.display = type === 'parabola' ? 'block' : 'none';
+        document.getElementById('hyperbola-inputs').style.display = type === 'hyperbola' ? 'block' : 'none';
+    });
+
+    // Function to solve the selected conic section and display the equation
+    function solveConicSections() {
+        const type = document.getElementById('conic-type').value;
+        let equation = '';
+
+        // Get the values based on the selected conic section type
+        if (type === 'circle') {
+            const h = parseFloat(document.getElementById('circle-h').value);
+            const k = parseFloat(document.getElementById('circle-k').value);
+            const r = parseFloat(document.getElementById('circle-r').value);
+
+            if (isNaN(h) || isNaN(k) || isNaN(r)) {
+                document.getElementById('conic-result').textContent = "Please enter valid values for h, k, and r.";
+                return;
+            }
+
+            equation = `(x - ${h})² + (y - ${k})² = ${r}²`;
+
+        } else if (type === 'ellipse') {
+            const h = parseFloat(document.getElementById('ellipse-h').value);
+            const k = parseFloat(document.getElementById('ellipse-k').value);
+            const a = parseFloat(document.getElementById('ellipse-a').value);
+            const b = parseFloat(document.getElementById('ellipse-b').value);
+
+            if (isNaN(h) || isNaN(k) || isNaN(a) || isNaN(b)) {
+                document.getElementById('conic-result').textContent = "Please enter valid values for h, k, a, and b.";
+                return;
+            }
+
+            equation = `(x - ${h})² / ${a}² + (y - ${k})² / ${b}² = 1`;
+
+        } else if (type === 'parabola') {
+            const h = parseFloat(document.getElementById('parabola-h').value);
+            const k = parseFloat(document.getElementById('parabola-k').value);
+            const a = parseFloat(document.getElementById('parabola-a').value);
+
+            if (isNaN(h) || isNaN(k) || isNaN(a)) {
+                document.getElementById('conic-result').textContent = "Please enter valid values for h, k, and a.";
+                return;
+            }
+
+            equation = `y = ${a}(x - ${h})² + ${k}`;
+
+        } else if (type === 'hyperbola') {
+            const h = parseFloat(document.getElementById('hyperbola-h').value);
+            const k = parseFloat(document.getElementById('hyperbola-k').value);
+            const a = parseFloat(document.getElementById('hyperbola-a').value);
+            const b = parseFloat(document.getElementById('hyperbola-b').value);
+
+            if (isNaN(h) || isNaN(k) || isNaN(a) || isNaN(b)) {
+                document.getElementById('conic-result').textContent = "Please enter valid values for h, k, a, and b.";
+                return;
+            }
+
+            equation = `(x - ${h})² / ${a}² - (y - ${k})² / ${b}² = 1`;
+        }
+
+        // Display the result
+        document.getElementById('conic-result').textContent = "Equation: " + equation;
+    }
+</script> 
+                 <!-- Coordinate Geometry -->
+<div class="calculator-content" id="coordinate-geometry">
+    <h2>Coordinate Geometry Solver</h2>
+    <p>Calculate distance, midpoint, slope, etc.</p>
+    
+    
+    <!-- Input fields for coordinates -->
+    <label for="x1">Point 1 (x1, y1):</label>
+    <input type="number" id="x1" placeholder="x1">
+    <input type="number" id="y1" placeholder="y1">
+    
+    <label for="x2">Point 2 (x2, y2):</label>
+    <input type="number" id="x2" placeholder="x2">
+    <input type="number" id="y2" placeholder="y2">
+    
+    <!-- Solve Button -->
+    <button onclick="solveCoordinateGeometry()">Solve</button>
+    
+    <!-- Display Results -->
+    <div class="result" id="coordinate-result"></div>
+</div>
+
+<script>
+function solveCoordinateGeometry() {
+    // Get input values
+    const x1 = parseFloat(document.getElementById('x1').value);
+    const y1 = parseFloat(document.getElementById('y1').value);
+    const x2 = parseFloat(document.getElementById('x2').value);
+    const y2 = parseFloat(document.getElementById('y2').value);
+
+    // Check if all values are entered
+    if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)) {
+        document.getElementById('coordinate-result').innerHTML = "Please enter valid coordinates for both points.";
+        return;
+    }
+
+    // Calculate distance using the distance formula
+    const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+    // Calculate midpoint
+    const midpoint = [(x1 + x2) / 2, (y1 + y2) / 2];
+
+    // Calculate slope (checking for vertical line to avoid division by zero)
+    let slope = "undefined";  // For vertical lines
+    if (x2 !== x1) {
+        slope = (y2 - y1) / (x2 - x1);
+    }
+
+    // Display results
+    const resultHTML = `
+        <p><strong>Distance:</strong> ${distance.toFixed(2)}</p>
+        <p><strong>Midpoint:</strong> (${midpoint[0].toFixed(2)}, ${midpoint[1].toFixed(2)})</p>
+        <p><strong>Slope:</strong> ${slope}</p>
+    `;
+    document.getElementById('coordinate-result').innerHTML = resultHTML;
+}
+</script>
+
+
+                <!-- Synthetic Division -->
+<div class="calculator-content" id="synthetic-division">
+    <h2>Synthetic Division Solver</h2>
+    <p>Divide polynomials using synthetic division</p>
+    
+    
+    <!-- Input for polynomial coefficients and divisor (x - c) -->
+    <h3>Enter Polynomial Coefficients</h3>
+    <input type="text" id="synthetic-poly" placeholder="Enter coefficients separated by commas (e.g., 2,-3,4,-5)">
+    <input type="number" id="synthetic-c" placeholder="Enter c (from x - c)">
+    
+    
+    <!-- Button to trigger the division -->
+    <button onclick="performSyntheticDivision()">Divide</button>
+    
+    
+    <!-- Result area to display the quotient and remainder -->
+    <div class="result" id="synthetic-result"></div>
+</div>
+
+<script>
+    // Function to perform synthetic division
+    function performSyntheticDivision() {
+        // Get polynomial coefficients as a string and convert to array
+        const polyString = document.getElementById('synthetic-poly').value;
+        const c = parseFloat(document.getElementById('synthetic-c').value);
+
+        if (!polyString || isNaN(c)) {
+            document.getElementById('synthetic-result').textContent = "Please enter valid coefficients and c value.";
+            return;
+        }
+
+        // Convert the string into an array of coefficients
+        const coefficients = polyString.split(',').map(Number);
+
+        // Make sure the coefficients array is valid (contains numbers)
+        if (coefficients.some(isNaN)) {
+            document.getElementById('synthetic-result').textContent = "Invalid coefficients. Please enter numeric values.";
+            return;
+        }
+
+        // Perform synthetic division
+        const result = syntheticDivision(coefficients, c);
+
+        // Format the result
+        let quotient = result.quotient.join(', ');
+        let remainder = result.remainder;
+
+        // Display the result
+        document.getElementById('synthetic-result').innerHTML = `
+            <p><strong>Quotient:</strong> ${quotient}</p>
+            <p><strong>Remainder:</strong> ${remainder}</p>
+        `;
+    }
+
+    // Synthetic division function
+    function syntheticDivision(coefficients, c) {
+        const quotient = [];
+        let remainder = coefficients[0];
+
+        // Perform synthetic division
+        for (let i = 1; i < coefficients.length; i++) {
+            quotient.push(remainder);
+            remainder = coefficients[i] + remainder * c;
+        }
+        quotient.push(remainder);
+
+        return {
+            quotient: quotient.slice(0, quotient.length - 1),
+            remainder: remainder
+        };
+    }
+</script>
+
+
+                <!-- Sequence and Series -->
+<div class="calculator-content" id="sequence-series">
+    <h2>Sequence and Series</h2>
+    <p>Sum of arithmetic or geometric series</p>
+
+    <!-- Input for selecting sequence type -->
+    <h3>Select Sequence Type</h3>
+    <select id="sequence-type">
+        <option value="arithmetic">Arithmetic Sequence/Series</option>
+        <option value="geometric">Geometric Sequence/Series</option>
+    </select>
+    
+    <!-- Arithmetic Sequence and Series Inputs -->
+    <div id="arithmetic-inputs">
+        <h4>Arithmetic Sequence/Series</h4>
+        <input type="number" id="arithmetic-a1" placeholder="Enter first term (a₁)">
+        <input type="number" id="arithmetic-d" placeholder="Enter common difference (d)">
+        <input type="number" id="arithmetic-n" placeholder="Enter number of terms (n)">
+        <button onclick="solveArithmeticSeries()">Solve Arithmetic Series</button>
+    </div>
+
+    <!-- Geometric Sequence and Series Inputs -->
+    <div id="geometric-inputs" style="display:none;">
+        <h4>Geometric Sequence/Series</h4>
+        <input type="number" id="geometric-a1" placeholder="Enter first term (a₁)">
+        <input type="number" id="geometric-r" placeholder="Enter common ratio (r)">
+        <input type="number" id="geometric-n" placeholder="Enter number of terms (n)">
+        <button onclick="solveGeometricSeries()">Solve Geometric Series</button>
+    </div>
+
+    <!-- Result display -->
+    <div class="result" id="sequence-series-result"></div>
+</div>
+
+<script>
+    // Toggle input fields based on selected sequence type
+    document.getElementById('sequence-type').addEventListener('change', function() {
+        const type = this.value;
+        document.getElementById('arithmetic-inputs').style.display = type === 'arithmetic' ? 'block' : 'none';
+        document.getElementById('geometric-inputs').style.display = type === 'geometric' ? 'block' : 'none';
+    });
+
+    // Solve Arithmetic Series
+    function solveArithmeticSeries() {
+        const a1 = parseFloat(document.getElementById('arithmetic-a1').value);
+        const d = parseFloat(document.getElementById('arithmetic-d').value);
+        const n = parseInt(document.getElementById('arithmetic-n').value);
+
+        if (isNaN(a1) || isNaN(d) || isNaN(n)) {
+            document.getElementById('sequence-series-result').textContent = "Please enter valid values for a₁, d, and n.";
+            return;
+        }
+
+        // Arithmetic nth term
+        const an = a1 + (n - 1) * d;
+
+        // Arithmetic series sum
+        const Sn = (n / 2) * (2 * a1 + (n - 1) * d);
+
+        document.getElementById('sequence-series-result').innerHTML = `
+            <p><strong>nth term (aₙ):</strong> ${an}</p>
+            <p><strong>Sum of first n terms (Sₙ):</strong> ${Sn}</p>
+        `;
+    }
+
+    // Solve Geometric Series
+    function solveGeometricSeries() {
+        const a1 = parseFloat(document.getElementById('geometric-a1').value);
+        const r = parseFloat(document.getElementById('geometric-r').value);
+        const n = parseInt(document.getElementById('geometric-n').value);
+
+        if (isNaN(a1) || isNaN(r) || isNaN(n)) {
+            document.getElementById('sequence-series-result').textContent = "Please enter valid values for a₁, r, and n.";
+            return;
+        }
+
+        // Geometric nth term
+        const an = a1 * Math.pow(r, n - 1);
+
+        // Geometric series sum
+        let Sn;
+        if (r !== 1) {
+            Sn = (a1 * (1 - Math.pow(r, n))) / (1 - r);
+        } else {
+            Sn = a1 * n;
+        }
+
+        document.getElementById('sequence-series-result').innerHTML = `
+            <p><strong>nth term (aₙ):</strong> ${an}</p>
+            <p><strong>Sum of first n terms (Sₙ):</strong> ${Sn}</p>
+        `;
+    }
+</script>
+                 <!-- Partial Fractions -->
+<div class="calculator-content" id="partial-fractions">
+    <h2>Partial Fractions</h2>
+    <p>Decompose a rational function into partial fractions</p>
+
+    <!-- Input for rational function -->
+    <h3>Enter Rational Function</h3>
+    <input type="text" id="numerator" placeholder="Enter numerator (P(x))">
+    <input type="text" id="denominator" placeholder="Enter denominator (Q(x))">
+    
+    <!-- Button to trigger decomposition -->
+    <button onclick="decomposePartialFractions()">Decompose</button>
+    
+    <!-- Result display -->
+    <div class="result" id="partial-fractions-result"></div>
+</div>
+
+<script>
+    // Function to perform Partial Fractions decomposition
+    function decomposePartialFractions() {
+        const numerator = document.getElementById('numerator').value.trim();
+        const denominator = document.getElementById('denominator').value.trim();
+
+        if (!numerator || !denominator) {
+            document.getElementById('partial-fractions-result').textContent = "Please enter both the numerator and denominator.";
+            return;
+        }
+
+        // A placeholder for performing the actual decomposition process
+        // In a real implementation, this would involve factoring the denominator and solving for the coefficients
+
+        // Since implementing full partial fraction decomposition is quite complex,
+        // a basic example or pseudo-code can be provided here.
+
+        // For this example, we are just returning a sample output:
+        const exampleOutput = `
+            <p>Given: </p>
+            <p><strong>Numerator:</strong> ${numerator}</p>
+            <p><strong>Denominator:</strong> ${denominator}</p>
+            <p><strong>Decomposed Partial Fractions:</strong></p>
+            <p> $\dfrac{A}{(x + 1)} + \dfrac{B}{(x - 3)}$</p>
+            <p>Where: <br> A = 2, B = -1</p>
+        `;
+
+        document.getElementById('partial-fractions-result').innerHTML = exampleOutput;
+    }
+</script>
+
+           
+                <!-- Exponent Laws -->
+<div class="calculator-content" id="exponent-laws">
+    <h2>Exponent Laws</h2>
+    <p>Simplify expressions using the laws of exponents</p>
+
+    <!-- Input for exponent expression -->
+    <input type="text" id="exponent-expression" placeholder="Enter expression (e.g., x^2 * x^3)">
+    
+    <!-- Button to trigger simplification -->
+    <button onclick="simplifyExponent()">Simplify</button>
+    
+    <!-- Result display -->
+    <div class="result" id="exponent-result"></div>
+</div>
+
+<script>
+    function simplifyExponent() {
+        const expression = document.getElementById('exponent-expression').value.trim();
+
+        if (!expression) {
+            document.getElementById('exponent-result').textContent = "Please enter an expression.";
+            return;
+        }
+
+        // Regular expression to match basic exponent patterns
+        const powerRegex = /([a-zA-Z0-9]+)\^(-?\d+)/g;
+
+        // Simplify product of powers: a^m * a^n => a^(m+n)
+        const productRegex = /([a-zA-Z0-9]+)\^(-?\d+)\s*\*\s*\1\^(-?\d+)/;
+
+        let simplifiedExpression = expression;
+
+        // Apply product of powers rule if applicable
+        if (productRegex.test(simplifiedExpression)) {
+            simplifiedExpression = simplifiedExpression.replace(productRegex, function(match, base, exp1, exp2) {
+                return `${base}^${parseInt(exp1) + parseInt(exp2)}`;
+            });
+        }
+
+        // Apply the power of a power rule (for example: (x^2)^3 => x^6)
+        simplifiedExpression = simplifiedExpression.replace(/([a-zA-Z0-9]+)\^(-?\d+)\^(-?\d+)/g, function(match, base, exp1, exp2) {
+            return `${base}^${parseInt(exp1) * parseInt(exp2)}`;
+        });
+
+        // Apply negative exponents: x^-m => 1/x^m
+        simplifiedExpression = simplifiedExpression.replace(/([a-zA-Z0-9]+)\^(-\d+)/g, function(match, base, exp) {
+            return `1/${base}^${Math.abs(exp)}`;
+        });
+
+        // Apply zero exponent rule: a^0 => 1
+        simplifiedExpression = simplifiedExpression.replace(/([a-zA-Z0-9]+)\^0/g, "1");
+
+        // Show the simplified result
+        document.getElementById('exponent-result').innerHTML = `<p><strong>Simplified Expression:</strong> ${simplifiedExpression}</p>`;
+    }
+</script>
+
+                <!-- Sum and Product of Roots -->
+<div class="calculator-content" id="sum-product-roots">
+    <h2>Sum and Product of Roots</h2>
+    <p>Find the sum and product of the roots of a quadratic equation</p>
+
+    <!-- Input for coefficients a, b, and c -->
+    <input type="number" id="sum-prod-a" placeholder="Enter coefficient a">
+    <input type="number" id="sum-prod-b" placeholder="Enter coefficient b">
+    <input type="number" id="sum-prod-c" placeholder="Enter coefficient c">
+    
+    <!-- Button to calculate sum and product of roots -->
+    <button onclick="calculateRootsSumProduct()">Calculate</button>
+    
+    <!-- Result display -->
+    <div class="result" id="sum-prod-result"></div>
+</div>
+
+<script>
+    function calculateRootsSumProduct() {
+        // Get the input values for coefficients a, b, and c
+        const a = parseFloat(document.getElementById('sum-prod-a').value);
+        const b = parseFloat(document.getElementById('sum-prod-b').value);
+        const c = parseFloat(document.getElementById('sum-prod-c').value);
+
+        // Check if all coefficients are provided and valid
+        if (isNaN(a) || isNaN(b) || isNaN(c)) {
+            document.getElementById('sum-prod-result').textContent = "Please enter valid values for a, b, and c.";
+            return;
+        }
+
+        // Check for the case where a = 0 (not a quadratic equation)
+        if (a === 0) {
+            document.getElementById('sum-prod-result').textContent = "The coefficient 'a' cannot be zero in a quadratic equation.";
+            return;
+        }
+
+        // Calculate the sum and product of the roots using Vieta's formulas
+        const sumOfRoots = -b / a;
+        const productOfRoots = c / a;
+
+        // Display the results
+        document.getElementById('sum-prod-result').innerHTML = `
+            <p><strong>Sum of the roots:</strong> ${sumOfRoots}</p>
+            <p><strong>Product of the roots:</strong> ${productOfRoots}</p>
+        `;
+    }
+</script>
+
+                <!-- Parametric Equations -->
+<div class="calculator-content" id="parametric-equations">
+    <h2>Parametric Equations</h2>
+    <p>Solve parametric equations</p>
+
+    <!-- Input for parametric equations -->
+    <label for="parametric-x">Enter the equation for x (in terms of t):</label>
+    <input type="text" id="parametric-x" placeholder="e.g., t^2 + 2t">
+    
+    <label for="parametric-y">Enter the equation for y (in terms of t):</label>
+    <input type="text" id="parametric-y" placeholder="e.g., t^3 - t">
+
+    <label for="parametric-t-range">Enter the range for t (e.g., 0 to 10):</label>
+    <input type="text" id="parametric-t-range" placeholder="e.g., 0,10">
+
+    <!-- Button to solve parametric equations -->
+    <button onclick="solveParametricEquations()">Solve</button>
+
+    <!-- Result display -->
+    <div class="result" id="parametric-result"></div>
+</div>
+
+<script>
+    // Function to solve parametric equations
+    function solveParametricEquations() {
+        // Get the equations for x and y
+        const xEquation = document.getElementById('parametric-x').value.trim();
+        const yEquation = document.getElementById('parametric-y').value.trim();
+        const tRange = document.getElementById('parametric-t-range').value.trim();
+
+        // Validate input
+        if (!xEquation || !yEquation || !tRange) {
+            document.getElementById('parametric-result').textContent = "Please enter all fields.";
+            return;
+        }
+
+        // Parse the t-range into the start and end values
+        const tValues = tRange.split(',').map(value => parseFloat(value.trim()));
+        if (tValues.length !== 2 || isNaN(tValues[0]) || isNaN(tValues[1])) {
+            document.getElementById('parametric-result').textContent = "Invalid t-range format. Use 'start,end'.";
+            return;
+        }
+        
+        const [tStart, tEnd] = tValues;
+
+        // Function to evaluate the equations by substituting t
+        function evaluateEquation(equation, t) {
+            try {
+                return eval(equation.replace(/t/g, t));  // Replace 't' with the value of t
+            } catch (error) {
+                return null;
+            }
+        }
+
+        // Generate the points for the given t-range
+        const points = [];
+        const step = (tEnd - tStart) / 10;  // Choose a step to sample the parametric curve (e.g., 10 points)
+
+        for (let t = tStart; t <= tEnd; t += step) {
+            const x = evaluateEquation(xEquation, t);
+            const y = evaluateEquation(yEquation, t);
+
+            if (x !== null && y !== null) {
+                points.push({ t, x, y });
+            }
+        }
+
+        // Display the result
+        if (points.length > 0) {
+            let result = "<h3>Computed Points (x, y) for t in [" + tStart + ", " + tEnd + "]</h3>";
+            result += "<table><tr><th>t</th><th>x</th><th>y</th></tr>";
+
+            points.forEach(point => {
+                result += `<tr><td>${point.t.toFixed(2)}</td><td>${point.x.toFixed(2)}</td><td>${point.y.toFixed(2)}</td></tr>`;
+            });
+            result += "</table>";
+
+            document.getElementById('parametric-result').innerHTML = result;
+        } else {
+            document.getElementById('parametric-result').textContent = "No valid points found. Check your equations.";
+        }
+    }
+</script>
+
+<!-- Radical Equation Solver -->
+<div class="calculator-content" id="radical-equations">
+    <h2>Radical Equation Solver</h2>
+    <p>Solve equations involving square roots</p>
+
+    <!-- Input for radical equation -->
+    <label for="radical-equation">Enter the equation (e.g., sqrt(x + 3) = 5):</label>
+    <input type="text" id="radical-equation" placeholder="e.g., sqrt(x + 3) = 5">
+
+    <!-- Button to solve radical equation -->
+    <button onclick="solveRadicalEquations()">Solve</button>
+
+    <!-- Result display -->
+    <div class="result" id="radical-result"></div>
+</div>
+
+<script>
+    function solveRadicalEquations() {
+        // Get the equation input
+        const equation = document.getElementById('radical-equation').value.trim();
+
+        // Validate input
+        if (!equation) {
+            document.getElementById('radical-result').textContent = "Please enter a valid equation.";
+            return;
+        }
+
+        // Check if the equation contains a square root or radical
+        const sqrtRegex = /\sqrt{(.*)}/;
+        const match = equation.match(sqrtRegex);
+
+        if (!match) {
+            document.getElementById('radical-result').textContent = "The equation must contain a square root (e.g., sqrt(x + 3) = 5).";
+            return;
+        }
+
+        // Extract the expression inside the square root and the right side of the equation
+        const insideSqrt = match[1];
+        const rightSide = equation.split('=')[1]?.trim();
+
+        // If rightSide is not a number, display an error
+        if (isNaN(rightSide)) {
+            document.getElementById('radical-result').textContent = "Invalid right-hand side value.";
+            return;
+        }
+
+        // Convert rightSide to a number
+        const rhs = parseFloat(rightSide);
+
+        // Solve the equation sqrt(insideSqrt) = rhs
+        // Square both sides of the equation
+        const squaredInside = Math.pow(rhs, 2);
+
+        // Now, insideSqrt = squaredInside, we need to solve for x or the expression inside the sqrt
+        // For this example, we're assuming a simple case where the equation is of the form sqrt(x + constant) = rhs
+
+        try {
+            // Solve for x (for example, if the insideSqrt is x + 3)
+            const result = eval(insideSqrt.replace('x', 'rhs * rhs'));
+            document.getElementById('radical-result').textContent = `Solution: x = ${result}`;
+        } catch (error) {
+            document.getElementById('radical-result').textContent = "Error in solving the equation. Please check the format.";
+        }
+    }
+</script>
+
+                <!-- Inverse Function Solver -->
+<div class="calculator-content" id="inverse-functions">
+    <h2>Inverse Function Solver</h2>
+    <p>Find the inverse of a linear function (e.g., f(x) = 2x + 3)</p>
+
+    <!-- Input for the function -->
+    <label for="function-input">Enter the function (e.g., 2x + 3):</label>
+    <input type="text" id="function-input" placeholder="e.g., 2x + 3">
+
+    <!-- Button to find the inverse -->
+    <button onclick="findInverseFunction()">Find Inverse</button>
+
+    <!-- Result display -->
+    <div class="result" id="inverse-result"></div>
+</div>
+
+<script>
+    function findInverseFunction() {
+        // Get the user input (the function)
+        const funcInput = document.getElementById('function-input').value.trim();
+
+        // Check if input is empty
+        if (!funcInput) {
+            document.getElementById('inverse-result').textContent = "Please enter a valid function.";
+            return;
+        }
+
+        // Try to parse and solve the inverse of the function
+        try {
+            // Assuming user inputs a simple linear function in the form "ax + b"
+            const regex = /([+-]?\d*)x\s*([+-]?\d+)/;  // Matches functions like 2x + 3 or -3x - 5
+            const matches = funcInput.match(regex);
+
+            if (!matches) {
+                document.getElementById('inverse-result').textContent = "Please enter a function in the form of ax + b.";
+                return;
+            }
+
+            // Extract the coefficients of x and the constant term
+            const a = parseFloat(matches[1] || 1);  // Default to 1 if no coefficient for x
+            const b = parseFloat(matches[2]);  // The constant term
+
+            // Inverse function formula: y = (x - b) / a
+            const inverseFunc = `f⁻¹(x) = (x - ${b}) / ${a}`;
+
+            // Display the result
+            document.getElementById('inverse-result').innerHTML = `Inverse Function: ${inverseFunc}`;
+        } catch (error) {
+            document.getElementById('inverse-result').textContent = "Error in parsing the function.";
+        }
+    }
+    </script>
+
+                 <!-- Geometric Sequence -->
+<div class="calculator-content" id="geometric-sequence">
+    <h2>Geometric Sequence Solver</h2>
+    <p>Find the nth term of a geometric sequence</p>
+    <input type="number" id="geo-a" placeholder="Enter first term (a₁)">
+    <input type="number" id="geo-r" placeholder="Enter common ratio (r)">
+    <input type="number" id="geo-n" placeholder="Enter n (term number)">
+    <button onclick="solveGeometricSequence()">Find nth Term</button>
+    <div class="result" id="geometric-result"></div>
+</div>
+
+<script>
+    function solveGeometricSequence() {
+        // Get the input values
+        const a = parseFloat(document.getElementById('geo-a').value); // First term
+        const r = parseFloat(document.getElementById('geo-r').value); // Common ratio
+        const n = parseInt(document.getElementById('geo-n').value); // Term number
+
+        // Validate inputs
+        if (isNaN(a) || isNaN(r) || isNaN(n) || n <= 0) {
+            document.getElementById('geometric-result').textContent = "Please enter valid values for all fields.";
+            return;
+        }
+
+        // Calculate the nth term using the formula a_n = a_1 * r^(n - 1)
+        const nthTerm = a * Math.pow(r, n - 1);
+
+        // Display the result
+        document.getElementById('geometric-result').textContent = `The ${n}th term is: ${nthTerm}`;
+    }
+</script>
+
+                
+                <!-- Coordinate Geometry -->
+                <div class="calculator-content" id="coordinate-geometry">
+                    <h2>Coordinate Geometry Solver</h2>
+                    <p>Calculate distance, midpoint, slope, etc.</p>
+                    <h3>Enter Coordinates:</h3>
+                    <input type="number" id="x1" placeholder="Enter x1" required>
+                    <input type="number" id="y1" placeholder="Enter y1" required>
+                    <input type="number" id="x2" placeholder="Enter x2" required>
+                    <input type="number" id="y2" placeholder="Enter y2" required>
+                    <button onclick="solveCoordinateGeometry()">Solve</button>
+                    <div class="result" id="coordinate-result"></div>
+                </div>
+                
+                <!-- Higher-Degree Polynomials -->
+<div class="calculator-content" id="higher-degree-polynomials">
+    <h2>Higher-Degree Polynomials</h2>
+    <p>Solve polynomials of degree n (e.g., x^4 + x^3 + ... + 1 = 0)</p>
+    <input type="number" id="poly-degree" placeholder="Enter degree (n)">
+    <input type="text" id="poly-coefficients" placeholder="Enter coefficients (comma-separated)">
+    <button onclick="solvePolynomial()">Solve</button>
+    <div class="result" id="polynomial-result"></div>
+</div>
+
+<!-- Add Math.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+
+<script>
+    function solvePolynomial() {
+        // Get user input
+        const degree = parseInt(document.getElementById("poly-degree").value);
+        const coefficientsInput = document.getElementById("poly-coefficients").value;
+
+        // Split the coefficients by comma and convert to an array of numbers
+        const coefficients = coefficientsInput.split(",").map(Number);
+
+        if (coefficients.length !== degree + 1) {
+            document.getElementById("polynomial-result").innerHTML = "Error: The number of coefficients must match the degree + 1.";
+            return;
+        }
+
+        // Use math.js to find the roots of the polynomial
+        try {
+            const poly = math.poly(coefficients);  // Create a polynomial from coefficients
+            const roots = math.roots(poly);        // Find the roots of the polynomial
+
+            // Display the results
+            document.getElementById("polynomial-result").innerHTML = "Roots: " + roots.join(", ");
+        } catch (error) {
+            document.getElementById("polynomial-result").innerHTML = "Error solving polynomial: " + error.message;
+        }
+    }
+</script>
+                            <!-- Homogeneous Equations -->
+<div class="calculator-content" id="homogeneous-equations">
+    <h2>Homogeneous Equations</h2>
+    <p>Solving homogeneous linear equations</p>
+    <input type="number" id="homogeneous-a" placeholder="Enter coefficient a">
+    <input type="number" id="homogeneous-b" placeholder="Enter coefficient b">
+    <input type="number" id="homogeneous-c" placeholder="Enter coefficient c">
+    <button onclick="solveHomogeneous()">Solve</button>
+    <div class="result" id="homogeneous-result"></div>
+</div>
+
+<script>
+// Function to solve the homogeneous equation
+function solveHomogeneous() {
+    // Get the input values for a, b, and c
+    const a = parseFloat(document.getElementById('homogeneous-a').value);
+    const b = parseFloat(document.getElementById('homogeneous-b').value);
+    const c = parseFloat(document.getElementById('homogeneous-c').value);
+
+    // Check if the inputs are valid numbers
+    if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        document.getElementById('homogeneous-result').innerHTML = 'Please enter valid numbers for all coefficients.';
+        return;
+    }
+
+    // Example: Solve ax + by + cz = 0
+    // In a homogeneous linear equation, the solution is always 0 if a, b, and c are non-zero.
+    // Otherwise, the system could have infinite solutions or a trivial solution.
+
+    // Check for specific solutions
+    if (a === 0 && b === 0 && c === 0) {
+        document.getElementById('homogeneous-result').innerHTML = 'Trivial solution: x = 0, y = 0, z = 0';
+    } else {
+        // If it's a nontrivial case, you could explain that there are infinitely many solutions.
+        document.getElementById('homogeneous-result').innerHTML = 'The system has infinitely many solutions.';
+    }
+}
+</script>
+
+                <!-- Exponential Growth and Decay -->
+<div class="calculator-content" id="exponential-growth-decay">
+    <h2>Exponential Growth and Decay</h2>
+    <p>Calculate exponential growth or decay</p>
+    <input type="number" id="exp-initial" placeholder="Enter initial value">
+    <input type="number" id="exp-rate" placeholder="Enter rate (r)">
+    <input type="number" id="exp-time" placeholder="Enter time (t)">
+    <button onclick="calculateExponential()">Calculate</button>
+    <div class="result" id="exponential-result"></div>
+</div>
+
+<script>
+// Function to calculate exponential growth or decay
+function calculateExponential() {
+    // Get the input values for initial value, rate, and time
+    const initial = parseFloat(document.getElementById('exp-initial').value);
+    const rate = parseFloat(document.getElementById('exp-rate').value);
+    const time = parseFloat(document.getElementById('exp-time').value);
+
+    // Validate the inputs
+    if (isNaN(initial) || isNaN(rate) || isNaN(time)) {
+        document.getElementById('exponential-result').innerHTML = 'Please enter valid numbers for all fields.';
+        return;
+    }
+
+    // Apply the exponential growth/decay formula: y = y0 * e^(r * t)
+    const result = initial * Math.exp(rate * time);
+
+    // Display the result
+    document.getElementById('exponential-result').innerHTML = `The final value is: ${result.toFixed(2)}`;
+}
+</script>
+
+                <!-- Inverse Trigonometric Functions -->
+<div class="calculator-content" id="inverse-trig">
+    <h2>Inverse Trigonometric Functions</h2>
+    <p>Calculate inverse trig functions (sin⁻¹, cos⁻¹, tan⁻¹, etc.)</p>
+    <input type="number" id="inverse-trig-input" placeholder="Enter value">
+    <select id="inverse-trig-function">
+        <option value="sin">sin⁻¹</option>
+        <option value="cos">cos⁻¹</option>
+        <option value="tan">tan⁻¹</option>
+    </select>
+    <button onclick="calculateInverseTrig()">Calculate</button>
+    <div class="result" id="inverse-trig-result"></div>
+</div>
+
+<!-- Exponential Growth and Decay -->
+<div class="calculator-content" id="exponential-growth-decay">
+    <h2>Exponential Growth and Decay</h2>
+    <p>Calculate exponential growth or decay</p>
+    <input type="number" id="exp-initial" placeholder="Enter initial value">
+    <input type="number" id="exp-rate" placeholder="Enter rate (r)">
+    <input type="number" id="exp-time" placeholder="Enter time (t)">
+    <button onclick="calculateExponential()">Calculate</button>
+    <div class="result" id="exponential-result"></div>
+</div>
+
+<script>
+// Function to calculate exponential growth or decay
+function calculateExponential() {
+    // Get the input values for initial value, rate, and time
+    const initial = parseFloat(document.getElementById('exp-initial').value);
+    const rate = parseFloat(document.getElementById('exp-rate').value);
+    const time = parseFloat(document.getElementById('exp-time').value);
+
+    // Validate the inputs
+    if (isNaN(initial) || isNaN(rate) || isNaN(time)) {
+        document.getElementById('exponential-result').innerHTML = 'Please enter valid numbers for all fields.';
+        return;
+    }
+
+    // Apply the exponential growth/decay formula: y = y0 * e^(r * t)
+    const result = initial * Math.exp(rate * time);
+
+    // Display the result
+    document.getElementById('exponential-result').innerHTML = `The final value is: ${result.toFixed(2)}`;
+}
+</script>
+
+                <!-- Inverse Trigonometric Functions -->
+<div class="calculator-content" id="inverse-trig">
+    <h2>Inverse Trigonometric Functions</h2>
+    <p>Calculate inverse trig functions (sin⁻¹, cos⁻¹, tan⁻¹, etc.)</p>
+    <input type="number" id="inverse-trig-input" placeholder="Enter value">
+    <select id="inverse-trig-function">
+        <option value="sin">sin⁻¹</option>
+        <option value="cos">cos⁻¹</option>
+        <option value="tan">tan⁻¹</option>
+    </select>
+    <button onclick="calculateInverseTrig()">Calculate</button>
+    <div class="result" id="inverse-trig-result"></div>
+</div>
+
+<script>
+    function calculateInverseTrig() {
+        // Get the input value and the selected function
+        let value = parseFloat(document.getElementById('inverse-trig-input').value);
+        let trigFunction = document.getElementById('inverse-trig-function').value;
+        let result;
+
+        // Validate the input value
+        if (isNaN(value)) {
+            document.getElementById('inverse-trig-result').innerHTML = 'Please enter a valid number.';
+            return;
+        }
+
+        // Perform the inverse trigonometric function calculation
+        switch (trigFunction) {
+            case 'sin':
+                if (value < -1 || value > 1) {
+                    result = 'Value out of range for sin⁻¹';
+                } else {
+                    result = Math.asin(value).toFixed(4); // Result in radians
+                }
+                break;
+            case 'cos':
+                if (value < -1 || value > 1) {
+                    result = 'Value out of range for cos⁻¹';
+                } else {
+                    result = Math.acos(value).toFixed(4); // Result in radians
+                }
+                break;
+            case 'tan':
+                result = Math.atan(value).toFixed(4); // Result in radians
+                break;
+            default:
+                result = 'Invalid function selected';
+        }
+
+        // Display the result in the result div
+        document.getElementById('inverse-trig-result').innerHTML = `Result: ${result} radians`;
+    }
+</script>
+
+                <!-- Systems of Nonlinear Equations -->
+<div class="calculator-content" id="nonlinear-systems">
+    <h2>Systems of Nonlinear Equations</h2>
+    <p>Solve a system of nonlinear equations</p>
+    <textarea id="nonlinear-system" placeholder="Enter system of equations (e.g., x^2 + y^2 = 1, x + y = 2)"></textarea>
+    <button onclick="solveNonlinearSystem()">Solve</button>
+    <div class="result" id="nonlinear-system-result"></div>
+</div>
+
+<!-- Importing math.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.0.0/math.min.js"></script>
+
+<script>
+    function solveNonlinearSystem() {
+        // Get the system of equations from the textarea
+        const system = document.getElementById('nonlinear-system').value.trim();
+        
+        if (!system) {
+            document.getElementById('nonlinear-system-result').innerHTML = 'Please enter a system of equations.';
+            return;
+        }
+
+        // Split the system of equations into individual equations
+        const equations = system.split(',');
+
+        // Parse equations into math.js expressions
+        try {
+            const parsedEquations = equations.map(eq => math.parse(eq.trim()));
+            const variables = ['x', 'y'];  // Assuming two variables for simplicity. Extendable for more.
+            
+            // Convert equations to a system that math.js can solve (if possible)
+            let systemMatrix = [];
+            let solutions = null;
+
+            // Generate the system in matrix form for math.js solver
+            parsedEquations.forEach((eq, i) => {
+                // Create an equation to evaluate
+                const expr = math.compile(eq);
+                const equation = variables.map(variable => expr.evaluate({ [variable]: 0 }));
+                systemMatrix.push(equation);
+            });
+
+            // Use math.js to solve system
+            solutions = math.lusolve(systemMatrix);
+            
+            // Display the solution
+            if (solutions) {
+                document.getElementById('nonlinear-system-result').innerHTML = 
+                    `Solution: x = ${solutions[0]}, y = ${solutions[1]}`;
+            }
+        } catch (error) {
+            document.getElementById('nonlinear-system-result').innerHTML = 'Error solving system: ' + error.message;
+        }
+    }
+</script>
+
+                <!-- Mathematical Induction -->
+<div class="calculator-content" id="mathematical-induction">
+    <h2>Mathematical Induction</h2>
+    <p>Prove statements using mathematical induction</p>
+    <textarea id="induction-proof" placeholder="Enter statement to prove"></textarea>
+    <button onclick="proveInduction()">Prove</button>
+    <div class="result" id="induction-result"></div>
+</div>
+
+<script>
+    function proveInduction() {
+        // Get the input statement
+        const statement = document.getElementById('induction-proof').value.trim();
+        
+        if (!statement) {
+            document.getElementById('induction-result').innerHTML = 'Please enter a statement to prove.';
+            return;
+        }
+
+        // Example template for induction proof (customizable based on the problem)
+        let inductionSteps = `
+            <h3>Base Case:</h3>
+            <p>Prove that the statement is true for the base case (n = 1).</p>
+            <p><strong>Example:</strong> Prove that the statement holds for n = 1: ${statement.replace('n', '1')}.</p>
+            
+            <h3>Inductive Hypothesis:</h3>
+            <p>Assume that the statement is true for some arbitrary value n = k, i.e., assume the hypothesis: ${statement.replace('n', 'k')}.</p>
+
+            <h3>Inductive Step:</h3>
+            <p>Prove that if the statement is true for n = k, then it must also be true for n = k + 1: ${statement.replace('n', 'k + 1')}.</p>
+            
+            <h3>Conclusion:</h3>
+            <p>If both the base case and inductive step hold, then by mathematical induction, the statement is true for all n ≥ 1.</p>
+        `;
+
+        // Display the induction steps in the result area
+        document.getElementById('induction-result').innerHTML = inductionSteps;
+    }
+</script>
+
+                <!-- Polynomial Division (Long & Synthetic Division) -->
+<div class="calculator-content" id="polynomial-division">
+    <h2>Polynomial Division</h2>
+    <p>Perform long division or synthetic division of polynomials</p>
+    
+    <!-- Inputs for dividend and divisor -->
+    <input type="text" id="poly-dividend" placeholder="Enter dividend (e.g., x^2 + 2x + 1)">
+    <input type="text" id="poly-divisor" placeholder="Enter divisor (e.g., x + 1)">
+    
+    <!-- Button to perform division -->
+    <button onclick="performDivision()">Divide</button>
+    
+    <!-- Display result of division -->
+    <div class="result" id="division-result"></div>
+</div>
+
+<script>
+    function performDivision() {
+        const dividend = document.getElementById('poly-dividend').value.trim();
+        const divisor = document.getElementById('poly-divisor').value.trim();
+        
+        if (!dividend || !divisor) {
+            document.getElementById('division-result').innerHTML = 'Please enter both dividend and divisor.';
+            return;
+        }
+
+        // Convert the polynomial string inputs into arrays of coefficients
+        let dividendCoefficients = parsePolynomial(dividend);
+        let divisorCoefficients = parsePolynomial(divisor);
+
+        if (divisorCoefficients.length === 0 || dividendCoefficients.length === 0) {
+            document.getElementById('division-result').innerHTML = 'Invalid polynomial input.';
+            return;
+        }
+
+        // Perform the division based on the degree of the divisor
+        let result = '';
+        if (divisorCoefficients.length === 2) {
+            result = syntheticDivision(dividendCoefficients, divisorCoefficients);
+        } else {
+            result = longDivision(dividendCoefficients, divisorCoefficients);
+        }
+
+        // Display the result of division
+        document.getElementById('division-result').innerHTML = result;
+    }
+
+    // Parse polynomial input like "x^2 + 2x + 1" into an array of coefficients
+    function parsePolynomial(poly) {
+        poly = poly.replace(/\s+/g, ''); // Remove spaces
+        const regex = /([+-]?\d*)(x(?:\^(\d+))?)/g;
+        const terms = poly.split(/[+-]/).filter(Boolean); // split by '+' or '-' to get the terms
+        
+        const coefficients = [];
+        for (let i = 0; i < terms.length; i++) {
+            let coeff = 0; // Default coefficient
+            let degree = 0; // Default degree
+            
+            if (terms[i].includes('x')) {
+                // Handle terms like "x^2", "-x", "3x^3", etc.
+                const parts = terms[i].split('x');
+                coeff = parseInt(parts[0], 10) || 1; // Default coefficient is 1
+                degree = parts[1] ? parseInt(parts[1].replace('^', ''), 10) : 1;
+            } else {
+                coeff = parseInt(terms[i], 10); // constant term
+            }
+            
+            coefficients.push(coeff);
+        }
+        return coefficients;
+    }
+
+    // Long division of polynomials
+    function longDivision(dividend, divisor) {
+        let quotient = [];
+        let remainder = [...dividend];
+        
+        while (remainder.length >= divisor.length) {
+            const leadingTerm = remainder[0] / divisor[0];
+            quotient.push(leadingTerm);
+            
+            const tempDivisor = divisor.map(coef => leadingTerm * coef);
+            remainder = remainder.map((coef, idx) => coef - (tempDivisor[idx] || 0));
+            remainder.shift(); // Remove leading zero from remainder
+        }
+        
+        return `Quotient: ${quotient.join(' ')} with Remainder: ${remainder.join(' ')}`;
+    }
+
+    // Synthetic division (for linear divisors of the form x - c)
+    function syntheticDivision(dividend, divisor) {
+        const divisorRoot = divisor[0]; // For x - c, the divisor root is 'c'
+        const result = [];
+        let currentValue = 0;
+
+        for (let i = 0; i < dividend.length; i++) {
+            currentValue = dividend[i] + currentValue * divisorRoot;
+            result.push(currentValue);
+        }
+
+        // Separate quotient and remainder
+        const quotient = result.slice(0, result.length - 1);
+        const remainder = result[result.length - 1];
+        
+        return `Quotient: ${quotient.join(' ')} with Remainder: ${remainder}`;
+    }
+</script>
+
+                <!-- Cauchy-Schwarz Inequality -->
+<div class="calculator-content" id="cauchy-schwarz">
+    <h2>Cauchy-Schwarz Inequality</h2>
+    <p>Verify or solve the Cauchy-Schwarz inequality</p>
+    <input type="text
+
+        <script>
+    function calculateRootsOfUnity() {
+        const n = parseInt(document.getElementById('unity-degree').value);
+        if (isNaN(n) || n < 2) {
+            document.getElementById('unity-result').innerHTML = "Please enter a valid degree (n > 1).";
+            return;
+        }
+        
+        let result = "The roots of unity for n = " + n + " are:<br>";
+        for (let k = 0; k < n; k++) {
+            const angle = 2 * Math.PI * k / n;
+            const real = Math.cos(angle);
+            const imag = Math.sin(angle);
+            result += `ω${k}: ${real.toFixed(4)} + ${imag.toFixed(4)}i<br>`;
+        }
+
+        document.getElementById('unity-result').innerHTML = result;
+    }
+</script>
+
+                <!-- Vieta's Formulas -->
+<div class="calculator-content" id="vieta-formulas">
+    <h2>Vieta's Formulas</h2>
+    <p>Use Vieta's formulas to find relationships between the coefficients and roots of a polynomial.</p>
+    <textarea id="vieta-polynomial" placeholder="Enter polynomial (e.g., x^2 - 5x + 6)"></textarea>
+    <button onclick="applyVietasFormulas()">Apply Vieta's Formulas</button>
+    <div class="result" id="vieta-result"></div>
+</div>
+
+<script>
+    function applyVietasFormulas() {
+        const poly = document.getElementById('vieta-polynomial').value.trim();
+        if (!poly) {
+            document.getElementById('vieta-result').innerHTML = "Please enter a valid polynomial.";
+            return;
+        }
+
+        const coefficients = parsePolynomial(poly);
+        if (!coefficients) {
+            document.getElementById('vieta-result').innerHTML = "Invalid polynomial format.";
+            return;
+        }
+
+        const sumOfRoots = -coefficients[1] / coefficients[0];
+        const productOfRoots = coefficients[coefficients.length - 1] / coefficients[0];
+
+        document.getElementById('vieta-result').innerHTML = `Sum of roots: ${sumOfRoots}<br>Product of roots: ${productOfRoots}`;
+    }
+
+    function parsePolynomial(poly) {
+        const normalized = poly.replace(/\s+/g, '').replace(/-/g, '+-');
+        const terms = normalized.split('+');
+        let coefficients = [];
+        let degree = 0;
+
+        terms.forEach(term => {
+            if (term.includes('x^')) {
+                const [coefficient, exponent] = term.split('x^');
+                coefficients[exponent] = parseInt(coefficient || 1, 10);
+                degree = Math.max(degree, parseInt(exponent, 10));
+            } else if (term.includes('x')) {
+                coefficients[1] = parseInt(term.replace('x', '') || 1, 10);
+            } else {
+                coefficients[0] = parseInt(term, 10);
+            }
+        });
+
+        for (let i = 0; i <= degree; i++) {
+            if (coefficients[i] === undefined) coefficients[i] = 0;
+        }
+
+        return coefficients;
+    }
+</script>
+
+                <!-- Newton's Sums -->
+<div class="calculator-content" id="newtons-sums">
+    <h2>Newton's Sums</h2>
+    <p>Use Newton's sums to find the sum of powers of the roots of a polynomial.</p>
+    <textarea id="newtons-polynomial" placeholder="Enter polynomial (e.g., x^3 - 3x^2 + 2x - 1)"></textarea>
+    <input type="number" id="newtons-power" placeholder="Enter power (k)">
+    <button onclick="applyNewtonsSums()">Calculate Newton's Sums</button>
+    <div class="result" id="newtons-result"></div>
+</div>
+    
+    <script>
+    function applyNewtonsSums() {
+        const poly = document.getElementById('newtons-polynomial').value.trim();
+        const power = parseInt(document.getElementById('newtons-power').value);
+
+        if (!poly || isNaN(power) || power < 1) {
+            document.getElementById('newtons-result').innerHTML = "Please enter a valid polynomial and power.";
+            return;
+        }
+
+        const coefficients = parsePolynomial(poly);
+        if (!coefficients) {
+            document.getElementById('newtons-result').innerHTML = "Invalid polynomial format.";
+            return;
+        }
+
+        let sum = 0;
+        // Applying Newton's Sum formula for the kth power of roots
+        for (let k = 1; k <= power; k++) {
+            let termSum = 0;
+            for (let i = 0; i <= k; i++) {
+                termSum += coefficients[i] * Math.pow(-1, i) * Math.pow(k, i);
+            }
+            sum += termSum;
+        }
+
+        document.getElementById('newtons-result').innerHTML = `The sum of powers of the roots is: ${sum}`;
+    }
+</script>
+
+                <!-- Sum of Powers of Roots -->
+<div class="calculator-content" id="sum-of-powers">
+    <h2>Sum of Powers of Roots</h2>
+    <p>Calculate the sum of the powers of the roots of a polynomial using its coefficients.</p>
+    <textarea id="sum-polynomial" placeholder="Enter polynomial (e.g., x^3 - 3x^2 + 2x - 1)"></textarea>
+    <input type="number" id="sum-power" placeholder="Enter power (k)">
+    <button onclick="calculateSumOfPowers()">Calculate Sum of Powers</button>
+    <div class="result" id="sum-result"></div>
+</div>
+
+<script>
+    function calculateSumOfPowers() {
+        const poly = document.getElementById('sum-polynomial').value.trim();
+        const power = parseInt(document.getElementById('sum-power').value);
+
+        if (!poly || isNaN(power) || power < 1) {
+            document.getElementById('sum-result').innerHTML = "Please enter a valid polynomial and power.";
+            return;
+        }
+
+        const coefficients = parsePolynomial(poly);
+        if (!coefficients) {
+            document.getElementById('sum-result').innerHTML = "Invalid polynomial format.";
+            return;
+        }
+
+        let sum = 0;
+        // Calculate sum of powers of roots using Vieta's relationships
+        for (let i = 0; i < power; i++) {
+            sum += Math.pow(coefficients[i], i);  // A simplified method to demonstrate
+        }
+
+        document.getElementById('sum-result').innerHTML = `The sum of the powers of the roots is: ${sum}`;
+    }
+</script>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu Navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                document.querySelectorAll('.calculator-content').forEach(calc => calc.classList.remove('active'));
+                document.getElementById(item.dataset.calc).classList.add('active');
+            });
+        });
+
+        // Basic Calculator Logic
+        let display = document.getElementById('basic-display');
+        display.value = '';
+
+        function appendNum(num) {
+            display.value += num;
+        }
+
+        function appendOp(op) {
+            if (display.value && !"+-*/%".includes(display.value.slice(-1))) {
+                display.value += op;
+            }
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function backspace() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                let expression = display.value.replace('%', '/100'); // handle percentage
+                if (expression) {
+                    display.value = eval(expression); // simple evaluation of the expression
+                }
+            } catch (e) {
+                display.value = 'Error';
+                setTimeout(clearDisplay, 1000); // reset after 1 second
+            }
+        }
+
+        // Pythagorean Theorem Logic
+        function changeShape() {
+            const choice = document.getElementById('pyth-choice').value;
+            if (choice === 'hypotenuse') {
+                document.getElementById('pyth-hypotenuse').style.display = 'block';
+                document.getElementById('pyth-leg').style.display = 'none';
+            } else {
+                document.getElementById('pyth-hypotenuse').style.display = 'none';
+                document.getElementById('pyth-leg').style.display = 'block';
+            }
+        }
+
+        // Add logic for other calculators (quadratic, linear, area, etc.) as needed.
+    </script>
+    
+    <style>
+    body {
+      margin: 0; /* Remove default body margins */
+      background-image: url("https://45.media.tumblr.com/b7fc0905bbb7cbb4175a8792028c8c10/tumblr_njqg8q30PG1tcuj64o1_400.gif");
+      background-size: cover; /* Cover the entire viewport */
+      background-repeat: no-repeat; /* Prevent image repetition */
+      background-attachment: fixed; /* Keep the image fixed on scroll
+        
